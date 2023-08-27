@@ -1,4 +1,4 @@
-var mysql = require("mysql");
+var mysql = require("mysql2");
 
 var pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -38,7 +38,6 @@ let question = `CREATE TABLE if not exists question(
   post_id varchar (255) not null,
   user_id int not null,
   PRIMARY KEY (question_id),
-  UNIQUE KEY (post_id),
   FOREIGN KEY (user_id) REFERENCES registration (user_id)
   )`;
 
