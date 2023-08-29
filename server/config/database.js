@@ -1,16 +1,18 @@
 var mysql = require("mysql2");
 
-var pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  connectionLimit: 12,
-});
+// var pool = mysql.createPool({
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   connectionLimit: 12,
+// });
 
-pool.getConnection((err, connection) => {
-  console.log("database connected!");
-});
+const pool = mysql.createConnection(process.env.DATABASE_URL)
+
+// pool.getConnection((err, connection) => {
+//   console.log("database connected!");
+// });
 
 let registration = `CREATE TABLE if not exists registration(
   user_id int auto_increment,
@@ -25,7 +27,7 @@ let profile = `CREATE TABLE if not exists profile(
   user_id int not null,
   first_name varchar(255) not null,
   last_name varchar(255) not null,        
-  PRIMARY KEY (user_profile_id),
+  PRIMARY KEY (user_profile_id)
 )`;
 
 let question = `CREATE TABLE if not exists question(
@@ -35,7 +37,7 @@ let question = `CREATE TABLE if not exists question(
   question_code_block varchar(255),
   tags varchar (255),
   user_id int not null,
-  PRIMARY KEY (question_id),
+  PRIMARY KEY (question_id)
   )`;
 
 let answer = `CREATE TABLE if not exists answer (
@@ -44,7 +46,7 @@ let answer = `CREATE TABLE if not exists answer (
   answer_code_block varchar (255),
   user_id int not null,
   question_id int not null,
-  PRIMARY KEY (answer_id),
+  PRIMARY KEY (answer_id)
   )`;
 
 pool.query(registration, (err, results) => {
