@@ -26,7 +26,6 @@ let profile = `CREATE TABLE if not exists profile(
   first_name varchar(255) not null,
   last_name varchar(255) not null,        
   PRIMARY KEY (user_profile_id),
-  FOREIGN KEY (user_id) REFERENCES registration(user_id)
 )`;
 
 let question = `CREATE TABLE if not exists question(
@@ -35,10 +34,8 @@ let question = `CREATE TABLE if not exists question(
   question_description varchar (255),
   question_code_block varchar(255),
   tags varchar (255),
-  post_id varchar (255) not null,
   user_id int not null,
   PRIMARY KEY (question_id),
-  FOREIGN KEY (user_id) REFERENCES registration (user_id)
   )`;
 
 let answer = `CREATE TABLE if not exists answer (
@@ -48,8 +45,6 @@ let answer = `CREATE TABLE if not exists answer (
   user_id int not null,
   question_id int not null,
   PRIMARY KEY (answer_id),
-  FOREIGN KEY (user_id) REFERENCES registration (user_id),
-  FOREIGN KEY (question_id) REFERENCES question (question_id)
   )`;
 
 pool.query(registration, (err, results) => {
