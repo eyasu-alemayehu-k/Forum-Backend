@@ -8,12 +8,7 @@ require("dotenv").config();
 //   connectionLimit: 12,
 // });
 
-const pool = mysql.createConnection(process.env.DATABASE_URL)
-
-pool.getConnection((err, connection) => {
-  if (err) throw err;
-  console.log("database connected!");
-});
+const pool = mysql.createConnection(process.env.DATABASE_URL);
 
 let registration = `CREATE TABLE if not exists registration(
   user_id int auto_increment,
