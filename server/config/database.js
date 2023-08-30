@@ -11,6 +11,7 @@ require("dotenv").config();
 const pool = mysql.createConnection(process.env.DATABASE_URL)
 
 pool.getConnection((err, connection) => {
+  if (err) throw err;
   console.log("database connected!");
 });
 
