@@ -1,5 +1,5 @@
 var mysql = require("mysql2");
-
+require("dotenv").config();
 // var pool = mysql.createPool({
 //   host: process.env.DB_HOST,
 //   user: process.env.DB_USER,
@@ -10,9 +10,9 @@ var mysql = require("mysql2");
 
 const pool = mysql.createConnection(process.env.DATABASE_URL)
 
-// pool.getConnection((err, connection) => {
-//   console.log("database connected!");
-// });
+pool.getConnection((err, connection) => {
+  console.log("database connected!");
+});
 
 let registration = `CREATE TABLE if not exists registration(
   user_id int auto_increment,
