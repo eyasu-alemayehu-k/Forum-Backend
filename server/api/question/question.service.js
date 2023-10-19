@@ -20,7 +20,7 @@ module.exports = {
     );
   },
   getAllQuestion: (callback) => {
-    pool.query(`SELECT * FROM question`, [], (err, result) => {
+    pool.query(`SELECT * FROM question ORDER BY question_id DESC`, [], (err, result) => {
       if (err) {
         return callback(err);
       }
@@ -43,6 +43,18 @@ module.exports = {
     pool.query(
       `SELECT * FROM question WHERE user_id = ?`,
       [id],
+      (err, result) => {
+        if (err) {
+          return callback(err);
+        }
+        return callback(null, result);
+      }
+    );
+  },
+  countAllQuestion: ( callback) => {
+    pool.query(
+      `SELECT COUNT(*) FROM question`,
+      [],
       (err, result) => {
         if (err) {
           return callback(err);

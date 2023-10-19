@@ -3,6 +3,10 @@ const {
   getAllAnswers,
   getAnswerById,
   getAnswerByQid,
+  countAnswerByQid,
+  answeredQuestionByQid,
+  unAnsweredQuestionByQid,
+  answeredQuestionCount,
 } = require("./answer.service");
 
 module.exports = {
@@ -33,4 +37,29 @@ module.exports = {
       return res.status(200).json({ data: result });
     });
   },
+  countAnswers: (req, res) => {
+    const { qid } = req.body;
+    countAnswerByQid(qid, (err, result) => {
+      if (err) {
+        return res.status(500).json({ msg: "database connection err" });
+      }
+      return res.status(200).json({ data: result });
+    });
+  },
+  answeredQuestions: (req, res) => {
+    answeredQuestionByQid((err, result) => {
+      if (err) {
+        return res.status(500).json({ msg: "database connection err" });
+      }
+      return res.status(200).json({ data: result });
+    });
+  },
+  unAnsweredQuestions: (req, res) => {
+    unAnsweredQuestionByQid((err, result) => {
+      if (err) {
+        return res.status(500).json({ msg: "database connection err" });
+      }
+      return res.status(200).json({ data: result });
+    });
+  }
 };

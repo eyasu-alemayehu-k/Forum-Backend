@@ -3,6 +3,7 @@ const {
   getAllQuestion,
   getQuestionById,
   getQuestionByUserId,
+  countAllQuestion,
 } = require("./question.service");
 
 
@@ -21,6 +22,7 @@ module.exports = {
         .status(400)
         .json({ msg: "Not all fields have been provided!" });
     }
+
 
     questionAdd(req.body, (err, results) => {
       if (err) {
@@ -44,6 +46,14 @@ module.exports = {
   getById: (req, res) => {
     const { qid } = req.body;
     getQuestionById(qid, (err, result) => {
+      if (err) {
+        return res.status(500).json({ msg: "database connection err" });
+      }
+      return res.status(200).json({ data: result });
+    });
+  },
+  countQuestion: (req, res) => {
+    countAllQuestion((err, result) => {
       if (err) {
         return res.status(500).json({ msg: "database connection err" });
       }

@@ -1,14 +1,18 @@
 var mysql = require("mysql2");
 require("dotenv").config();
-// var pool = mysql.createPool({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   database: process.env.DB_NAME,
-//   password: process.env.DB_PASSWORD,
-//   connectionLimit: 12,
-// });
+var pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  connectionLimit: 12,
+});
 
-const pool = mysql.createConnection(process.env.DATABASE_URL);
+pool.getConnection((err, conn)=> {
+  if (err) throw err;
+  console.log("database connected");
+});
+// const pool = mysql.createConnection(process.env.DATABASE_URL);
 
 let registration = `CREATE TABLE if not exists registration(
   user_id int auto_increment,
@@ -28,20 +32,22 @@ let profile = `CREATE TABLE if not exists profile(
 
 let question = `CREATE TABLE if not exists question(
   question_id int auto_increment,
-  question varchar(255) not null,
+  question varchar(2555) not null,
   question_description varchar (255),
   question_code_block varchar(255),
   tags varchar (255),
+  ask_date DATE not null DEFAULT CURRENT_TIMESTAMP,
   user_id int not null,
   PRIMARY KEY (question_id)
   )`;
 
 let answer = `CREATE TABLE if not exists answer (
   answer_id int auto_increment,
-  answer varchar(255) not null,
+  answer varchar(2555) not null,
   answer_code_block varchar (255),
   user_id int not null,
   question_id int not null,
+  answer_date DATE not null DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (answer_id)
   )`;
 

@@ -45,4 +45,40 @@ module.exports = {
       }
     );
   },
+  countAnswerByQid: (qid, callback) => {
+    pool.query(
+      `SELECT COUNT(*) FROM answer WHERE question_id = ?`,
+      [qid],
+      (err, result) => {
+        if (err) {
+          return callback(err);
+        }
+        return callback(null, result);
+      }
+    );
+  },
+  answeredQuestionByQid: (callback) => {
+    pool.query(
+      `SELECT DISTINCT question.question_id, question.* FROM question INNER JOIN answer ON question.question_id = answer.question_id WHERE answer.answer_id IS NOT NULL ORDER BY question.question_id DESC`,
+      [],
+      (err, result) => {
+        if (err) {
+          return callback(err);
+        }
+        return callback(null, result);
+      }
+    );
+  },
+  unAnsweredQuestionByQid: (callback) => {
+    pool.query(
+      `SELECT DISTINCT question.question_id, question.* FROM question LEFT JOIN answer ON question.question_id = answer.question_id WHERE answer.answer_id IS NULL ORDER BY question.question_id DESC`,
+      [],
+      (err, result) => {
+        if (err) {
+          return callback(err);
+        }
+        return callback(null, result);
+      }
+    );
+  },
 };
